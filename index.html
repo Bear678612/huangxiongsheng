@@ -748,8 +748,10 @@ $("#btn-print").addEventListener("click",()=>window.print());
     else{ started=true;mark(true); }
   }
 
-  // 进站尝试自动播放
-  window.addEventListener("load",()=>setTimeout(tryPlay,600));
+  // 进站立即尝试自动播放（不等待图片加载），少量重试兜底
+  [0,700,2000,5000].forEach(t=>setTimeout(()=>{
+    if(!started&&audio.paused){ tryPlay(); }
+  },t));
 
   // 若被自动播放策略拦截：用户第一次点击/触摸/按键时自动响起
   const off=()=>{
