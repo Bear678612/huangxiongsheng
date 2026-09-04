@@ -37,6 +37,15 @@
   .bg-deco::after{content:"";position:absolute;bottom:-260px;left:-200px;width:620px;height:620px;border-radius:50%;
     background:radial-gradient(circle,rgba(18,181,165,.13),transparent 65%)}
 
+  /* ---------- 动态水面背景 ---------- */
+  .bg-video{position:fixed;inset:0;z-index:-3;width:100%;height:100%;object-fit:cover;opacity:.5;
+    pointer-events:none}
+  .bg-video-veil{position:fixed;inset:0;z-index:-2;pointer-events:none;
+    background:color-mix(in srgb,var(--bg) 48%,transparent)}
+  @media (prefers-reduced-motion: reduce){
+    .bg-video,.bg-video-veil{display:none}
+  }
+
   /* ---------- 导航 ---------- */
   nav{
     position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:100;
@@ -288,7 +297,7 @@
   /* ---------- 打印 ---------- */
   @media print{
     :root{--bg:#fff;--surface:#fff;--surface-2:#f2f3f7;--text:#111;--text-2:#333;--text-3:#666;--line:#ddd}
-    nav,.bg-deco,.top-link,.theme-btn,.print-btn,#btn-copy-email,.lightbox,.music-link{display:none!important}
+    nav,.bg-deco,.top-link,.theme-btn,.print-btn,#btn-copy-email,.lightbox,.music-link,.bg-video,.bg-video-veil{display:none!important}
     .photo-item,.cert-item{cursor:default;break-inside:avoid}
     .cert-item .cap,.photo-item .cap{opacity:1;transform:none;position:static;background:none;color:#333;padding:8px 4px 0}
     .cert-item .zoom,.photo-item .zoom{display:none}
@@ -308,6 +317,10 @@
 </style>
 </head>
 <body>
+<video class="bg-video" aria-hidden="true" autoplay muted loop playsinline preload="auto" poster="">
+  <source src="water-bg.mp4" type="video/mp4">
+</video>
+<div class="bg-video-veil" aria-hidden="true"></div>
 <div class="bg-deco" aria-hidden="true"></div>
 
 <nav aria-label="主导航">
