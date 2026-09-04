@@ -5,21 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>黄雄胜 · AI 应用开发 | 让AI理解人，也让人理解AI</title>
 <meta name="description" content="黄雄胜 — 南宁师范大学人工智能学院计算机科学与技术本科生，主航道 AI 应用开发：提示词工程、多智能体工作流、AI+教育。">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css">
 <style>
   :root{
-    --primary:#4f6ef7; --primary-deep:#3b55d9; --accent:#12b5a5;
-    --grad:linear-gradient(135deg,#4f6ef7 0%,#12b5a5 100%);
-    --bg:#f6f7fb; --surface:#ffffff; --surface-2:#eef0f7;
-    --text:#1c2333; --text-2:#4b5568; --text-3:#8b93a7;
-    --line:#e3e6ef; --shadow:0 6px 24px rgba(28,35,51,.08);
-    --shadow-lg:0 14px 40px rgba(28,35,51,.14);
-    --radius:14px; --nav-h:60px;
+    --primary:#4a9d8e; --primary-deep:#3b8577; --accent:#f0a05a;
+    --grad:linear-gradient(135deg,#5aa896 0%,#f0b27a 100%);
+    --bg:#f7f4ee; --surface:#fffdf9; --surface-2:#f1ede4;
+    --text:#3d443b; --text-2:#69705f; --text-3:#9aa08e;
+    --line:#e7e1d2; --shadow:0 8px 28px rgba(120,105,75,.10);
+    --shadow-lg:0 16px 44px rgba(120,105,75,.16);
+    --radius:18px; --nav-h:60px;
+    --font-hand:'LXGW WenKai','LXGW WenKai Screen','LXGW WenKai Lite','Kaiti SC',STKaiti,KaiTi,'Noto Serif SC',serif;
   }
   html[data-theme="dark"]{
-    --bg:#0f1420; --surface:#181f2f; --surface-2:#212a3d;
-    --text:#e8ebf4; --text-2:#b3bccf; --text-3:#7a8499;
-    --line:#2a3347; --shadow:0 6px 24px rgba(0,0,0,.35);
-    --shadow-lg:0 14px 40px rgba(0,0,0,.5);
+    --bg:#15181a; --surface:#1e2321; --surface-2:#262c29;
+    --text:#e8ebe3; --text-2:#b4bcae; --text-3:#7e877a;
+    --line:#2d342f; --shadow:0 8px 28px rgba(0,0,0,.32);
+    --shadow-lg:0 16px 44px rgba(0,0,0,.48);
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 14px)}
@@ -28,20 +31,20 @@
     background:var(--bg);color:var(--text);line-height:1.7;
     transition:background .25s ease,color .25s ease;
   }
-  ::selection{background:var(--primary);color:#fff}
+  ::selection{background:var(--accent);color:#fff}
 
   /* ---------- 背景纹理 ---------- */
   .bg-deco{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
   .bg-deco::before{content:"";position:absolute;top:-220px;right:-180px;width:560px;height:560px;border-radius:50%;
-    background:radial-gradient(circle,rgba(79,110,247,.16),transparent 65%)}
+    background:radial-gradient(circle,rgba(240,176,122,.20),transparent 65%)}
   .bg-deco::after{content:"";position:absolute;bottom:-260px;left:-200px;width:620px;height:620px;border-radius:50%;
-    background:radial-gradient(circle,rgba(18,181,165,.13),transparent 65%)}
+    background:radial-gradient(circle,rgba(90,168,150,.18),transparent 65%)}
 
   /* ---------- 动态水面背景 ---------- */
   .bg-video{position:fixed;inset:0;z-index:-3;width:100%;height:100%;object-fit:cover;opacity:.5;
     pointer-events:none}
   .bg-video-veil{position:fixed;inset:0;z-index:-2;pointer-events:none;
-    background:color-mix(in srgb,var(--bg) 48%,transparent)}
+    background:color-mix(in srgb,var(--bg) 60%,transparent)}
   @media (prefers-reduced-motion: reduce){
     .bg-video,.bg-video-veil{display:none}
   }
@@ -54,7 +57,7 @@
     backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
     border-bottom:1px solid var(--line);
   }
-  .nav-name{font-weight:800;font-size:17px;letter-spacing:.5px;
+  .nav-name{font-weight:800;font-size:17px;letter-spacing:1px;font-family:var(--font-hand);
     background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;white-space:nowrap}
   .nav-links{display:flex;gap:2px;margin-left:auto}
   .nav-links a{
@@ -80,7 +83,7 @@
     background:color-mix(in srgb,var(--primary) 10%,transparent);
     padding:4px 14px;border-radius:999px;margin-bottom:10px;letter-spacing:2px;
   }
-  h2{font-size:clamp(22px,3vw,28px);margin-bottom:26px;letter-spacing:.5px}
+  h2{font-size:clamp(22px,3vw,28px);margin-bottom:26px;letter-spacing:1px;font-family:var(--font-hand)}
   h2 .hl{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
   .card{
     background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
@@ -99,8 +102,8 @@
   }
   .hero-badge .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);
     box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 60%,transparent);animation:pulse 2s infinite}
-  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(18,181,165,.5)}70%{box-shadow:0 0 0 8px transparent}100%{box-shadow:0 0 0 0 transparent}}
-  .hero h1{font-size:clamp(30px,5vw,46px);line-height:1.25;margin-bottom:8px}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(240,160,90,.5)}70%{box-shadow:0 0 0 8px transparent}100%{box-shadow:0 0 0 0 transparent}}
+  .hero h1{font-size:clamp(30px,5vw,46px);line-height:1.25;margin-bottom:8px;font-family:var(--font-hand)}
   .hero h1 span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
   .hero .role{font-size:clamp(16px,2.2vw,20px);color:var(--text-2);font-weight:600;margin-bottom:16px}
   .hero .role em{font-style:normal;color:var(--accent)}
@@ -118,8 +121,8 @@
     font-size:15px;font-weight:600;text-decoration:none;cursor:pointer;border:none;
     transition:transform .18s,box-shadow .18s,background .18s,border-color .18s;font-family:inherit;
   }
-  .btn-primary{background:var(--grad);color:#fff;box-shadow:0 6px 18px rgba(79,110,247,.32)}
-  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(79,110,247,.42)}
+  .btn-primary{background:var(--grad);color:#fff;box-shadow:0 6px 18px rgba(90,140,120,.30)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(90,140,120,.40)}
   .btn-ghost{background:var(--surface);color:var(--text);border:1px solid var(--line)}
   .btn-ghost:hover{transform:translateY(-2px);border-color:var(--primary);color:var(--primary);box-shadow:var(--shadow)}
   .btn-copied{background:var(--accent)!important;border-color:var(--accent)!important;color:#fff!important}
@@ -183,7 +186,7 @@
   .exp-quote{
     margin-top:14px;padding:12px 16px;border-left:3px solid var(--accent);border-radius:0 10px 10px 0;
     background:color-mix(in srgb,var(--accent) 8%,transparent);
-    color:var(--text-2);font-size:14px;
+    color:var(--text-2);font-size:14px;font-family:var(--font-hand);letter-spacing:.3px;
   }
   .exp-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
   .exp-tags span{font-size:12px;color:var(--text-3);background:var(--surface-2);padding:2px 10px;border-radius:6px}
@@ -204,7 +207,7 @@
   }
   .music-toast{
     position:fixed;right:78px;bottom:88px;z-index:90;max-width:240px;
-    background:var(--surface);border:1px solid var(--accent);color:var(--text-1);
+    background:var(--surface);border:1px solid var(--accent);color:var(--text-2);
     font-size:13.5px;padding:10px 14px;border-radius:12px;box-shadow:var(--shadow-lg);
     opacity:0;transform:translateY(8px);pointer-events:none;
     transition:opacity .35s,transform .35s;
@@ -227,32 +230,38 @@
   .cert b{color:var(--accent)}
 
   /* ---------- 照片带 / 证书墙 / 生活 ---------- */
-  .strip-title{font-size:14px;font-weight:700;color:var(--text-2);margin:22px 0 12px;display:flex;align-items:center;gap:8px}
-  .photo-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
-  .life-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
-  .photo-item{position:relative;overflow:hidden;cursor:zoom-in;padding:0;border:none;border-radius:var(--radius);
-    background:var(--surface-2);aspect-ratio:4/3;box-shadow:var(--shadow);transition:transform .22s ease,box-shadow .22s ease}
-  .photo-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s ease}
-  .photo-item:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
-  .photo-item:hover img{transform:scale(1.06)}
+  .strip-title{font-size:14.5px;font-weight:700;color:var(--text-2);margin:22px 0 12px;display:flex;align-items:center;gap:8px;font-family:var(--font-hand);letter-spacing:.5px}
+  .photo-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px}
+  .life-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}
+  /* ---------- 相纸相框：白边 + 轻微歪头，hover 摆正 ---------- */
+  .photo-item,.cert-item{
+    position:relative;overflow:hidden;cursor:zoom-in;
+    padding:10px 10px 12px;border:1px solid var(--line);border-radius:16px;
+    background:var(--surface);box-shadow:var(--shadow);
+    transition:transform .25s ease,box-shadow .25s ease;
+  }
+  .photo-item{display:flex;flex-direction:column;gap:8px}
+  .photo-item:nth-child(odd){transform:rotate(-.7deg)}
+  .photo-item:nth-child(even){transform:rotate(.8deg)}
+  .photo-item img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;border-radius:10px;transition:transform .3s ease}
   .photo-item .cap{
-    position:absolute;left:0;right:0;bottom:0;padding:24px 14px 9px;font-size:12.5px;font-weight:600;color:#fff;
-    background:linear-gradient(transparent,rgba(10,14,25,.72));opacity:0;transform:translateY(6px);
-    transition:opacity .2s,transform .2s;text-align:left}
-  .photo-item:hover .cap{opacity:1;transform:none}
-  .cert-item{position:relative;overflow:hidden;cursor:zoom-in;padding:0;border:none;border-radius:var(--radius);
-    background:var(--surface-2);aspect-ratio:3/2;box-shadow:var(--shadow);transition:transform .22s ease,box-shadow .22s ease}
-  .cert-item img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;transition:transform .3s ease}
+    position:static;opacity:1;transform:none;background:none;padding:0 4px 2px;
+    font-size:12.5px;font-weight:600;color:var(--text-2);text-align:center;
+    font-family:var(--font-hand);letter-spacing:.4px;line-height:1.5;
+  }
+  .photo-item:hover{transform:rotate(0deg) translateY(-4px);box-shadow:var(--shadow-lg)}
+  .photo-item:hover img{transform:scale(1.04)}
+  .cert-item img{width:100%;aspect-ratio:3/2;object-fit:cover;object-position:top center;display:block;border-radius:10px;transition:transform .3s ease}
   .cert-item:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
-  .cert-item:hover img{transform:scale(1.05)}
+  .cert-item:hover img{transform:scale(1.03)}
   .cert-item .cap{
-    position:absolute;left:0;right:0;bottom:0;padding:26px 14px 10px;font-size:13px;font-weight:600;color:#fff;
-    background:linear-gradient(transparent,rgba(10,14,25,.78));opacity:0;transform:translateY(6px);
+    position:absolute;left:10px;right:10px;bottom:12px;padding:26px 14px 10px;font-size:13px;font-weight:600;color:#fff;
+    background:linear-gradient(transparent,rgba(40,36,26,.78));border-radius:0 0 10px 10px;opacity:0;transform:translateY(6px);
     transition:opacity .22s,transform .22s;text-align:left}
   .cert-item:hover .cap{opacity:1;transform:none}
   .cert-item .zoom,.photo-item .zoom{
-    position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:9px;
-    background:rgba(15,20,32,.55);backdrop-filter:blur(4px);color:#fff;font-size:14px;
+    position:absolute;top:16px;right:16px;width:30px;height:30px;border-radius:9px;
+    background:rgba(50,45,35,.5);backdrop-filter:blur(4px);color:#fff;font-size:14px;
     display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .22s}
   .cert-item:hover .zoom,.photo-item:hover .zoom{opacity:1}
   .lightbox{
@@ -276,7 +285,7 @@
 
   /* ---------- 页脚 ---------- */
   footer{border-top:1px solid var(--line);padding:30px 16px;text-align:center;color:var(--text-3);font-size:13.5px}
-  footer .motto{font-size:13px;color:var(--text-3);opacity:.85;margin-top:4px}
+  footer .motto{font-size:13.5px;color:var(--text-3);opacity:.9;margin-top:4px;font-family:var(--font-hand);letter-spacing:1px}
   .top-link{
     position:fixed;right:24px;bottom:26px;width:44px;height:44px;border-radius:13px;border:none;cursor:pointer;
     background:var(--grad);color:#fff;font-size:18px;box-shadow:var(--shadow-lg);z-index:90;
@@ -298,7 +307,7 @@
   @media print{
     :root{--bg:#fff;--surface:#fff;--surface-2:#f2f3f7;--text:#111;--text-2:#333;--text-3:#666;--line:#ddd}
     nav,.bg-deco,.top-link,.theme-btn,.print-btn,#btn-copy-email,.lightbox,.music-link,.bg-video,.bg-video-veil{display:none!important}
-    .photo-item,.cert-item{cursor:default;break-inside:avoid}
+    .photo-item,.cert-item{cursor:default;break-inside:avoid;transform:none!important}
     .cert-item .cap,.photo-item .cap{opacity:1;transform:none;position:static;background:none;color:#333;padding:8px 4px 0}
     .cert-item .zoom,.photo-item .zoom{display:none}
     .cert-item img,.photo-item img{transform:none!important;object-fit:contain;object-position:center;background:#fff}
