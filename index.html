@@ -193,6 +193,14 @@
     0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 35%,transparent)}
     50%{box-shadow:0 0 0 8px transparent}
   }
+  .music-toast{
+    position:fixed;right:78px;bottom:88px;z-index:90;max-width:240px;
+    background:var(--surface);border:1px solid var(--accent);color:var(--text-1);
+    font-size:13.5px;padding:10px 14px;border-radius:12px;box-shadow:var(--shadow-lg);
+    opacity:0;transform:translateY(8px);pointer-events:none;
+    transition:opacity .35s,transform .35s;
+  }
+  .music-toast.show{opacity:1;transform:translateY(0)}
 
   /* ---------- 教育 / 证书 ---------- */
   .edu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
@@ -397,6 +405,7 @@
   <div class="motto">"技术如果不能降低认知门槛，就只是炫技。"</div>
 </footer>
 <button class="music-link" id="btn-music" title="《稻香》· 周杰伦（点击暂停/播放）" aria-label="背景音乐《稻香》播放控制">♪</button>
+<div class="music-toast" id="music-toast">♪ 浏览器需要你点一下页面，《稻香》就会响起～</div>
 <audio id="bgm" preload="auto" loop>
   <source src="https://freetyst.nf.migu.cn/public/product9th/product45/2022/05/0716/2009%E5%B9%B406%E6%9C%8826%E6%97%A5%E5%8D%9A%E5%B0%94%E6%99%AE%E6%96%AF/%E6%A0%87%E6%B8%85%E9%AB%98%E6%B8%85/MP3_128_16_Stero/60054702010165016.mp3" type="audio/mpeg">
   <source src="https://npm.elemecdn.com/anzhiyu-music@1.0.1/%E5%91%A8%E6%9D%B0%E4%BC%A6/%E7%A8%BB%E9%A6%99/%E7%A8%BB%E9%A6%99.mp3" type="audio/mpeg">
@@ -735,22 +744,30 @@ $("#btn-print").addEventListener("click",()=>window.print());
 
 // 背景音乐《稻香》：进站自动播放（被浏览器拦截时，首次任意交互后响起），按钮可暂停/继续
 (function(){
-  const audio=$("#bgm"), btn=$("#btn-music");
+  const audio=$("#bgm"), btn=$("#btn-music"), toast=$("#music-toast");
   let started=false;
 
   function mark(playing){ btn.classList.toggle("playing",playing); btn.textContent=playing?"❚❚":"♪";
-    btn.title=playing?"《稻香》播放中 · 点击暂停":"《稻香》已暂停 · 点击播放"; }
+    btn.title=playing?"《稻香》播放中 · 点击暂停":"《稻香》已暂停 · 点击播放";
+    if(playing&&toast) toast.classList.remove("show"); }
 
+  function toastMsg(){
+    if(!toast) return;
+    toast.classList.add("show");
+    setTimeout(()=>toast.classList.remove("show"),6500);
+  }
   function tryPlay(){
     audio.volume=0.55;
     const p=audio.play();
-    if(p&&p.catch){ p.then(()=>{started=true;mark(true);}).catch(()=>{mark(false);}); }
+    if(p&&p.catch){ p.then(()=>{started=true;mark(true);}).catch(()=>{mark(false);toastMsg();}); }
     else{ started=true;mark(true); }
   }
 
   // 进站立即尝试自动播放（不等待图片加载），少量重试兜底
+  let attempts=0;
   [0,700,2000,5000].forEach(t=>setTimeout(()=>{
-    if(!started&&audio.paused){ tryPlay(); }
+    attempts++;
+    if(!started&&audio.paused&&attempts<5){ tryPlay(); }
   },t));
 
   // 若被自动播放策略拦截：用户第一次点击/触摸/按键时自动响起
