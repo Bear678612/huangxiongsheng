@@ -179,40 +179,15 @@
   .exp-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
   .exp-tags span{font-size:12px;color:var(--text-3);background:var(--surface-2);padding:2px 10px;border-radius:6px}
 
-  /* ---------- 项目卡片 ---------- */
-  .proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px}
-  .proj-card{padding:24px;display:flex;flex-direction:column;gap:12px}
-  .proj-icon{width:44px;height:44px;border-radius:12px;background:var(--grad);
-    display:flex;align-items:center;justify-content:center;font-size:20px;flex:none}
-  .proj-card h3{font-size:17px}
-  .proj-meta{font-size:13px;color:var(--text-3)}
-  .proj-card p{font-size:14px;color:var(--text-2)}
-  .proj-result{
-    font-size:13.5px;color:var(--accent);font-weight:600;
-    background:color-mix(in srgb,var(--accent) 9%,transparent);
-    border-left:3px solid var(--accent);padding:8px 12px;border-radius:0 8px 8px 0;
+  /* ---------- 音乐按钮 ---------- */
+  .music-link{
+    position:fixed;right:24px;bottom:82px;width:44px;height:44px;border-radius:13px;cursor:pointer;
+    background:var(--surface);border:1px solid var(--line);color:var(--primary);font-size:17px;
+    display:flex;align-items:center;justify-content:center;text-decoration:none;
+    box-shadow:var(--shadow);z-index:90;
+    transition:transform .18s,box-shadow .18s,color .18s,border-color .18s;
   }
-  .proj-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto}
-  .proj-tags span{font-size:12px;color:var(--primary);background:color-mix(in srgb,var(--primary) 9%,transparent);
-    padding:3px 11px;border-radius:999px}
-
-  /* ---------- 技能矩阵 ---------- */
-  .skill-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
-  .skill-card{padding:24px}
-  .skill-card h3{font-size:16px;margin-bottom:16px;display:flex;align-items:center;gap:9px}
-  .skill-card h3 .ico{width:30px;height:30px;border-radius:9px;background:color-mix(in srgb,var(--primary) 12%,transparent);
-    display:inline-flex;align-items:center;justify-content:center;font-size:15px}
-  .skill-row{margin-bottom:13px}
-  .skill-row:last-child{margin-bottom:0}
-  .skill-row .top{display:flex;justify-content:space-between;gap:10px;font-size:14px;margin-bottom:5px}
-  .skill-row .top em{font-style:normal;color:var(--text-3);font-size:12.5px;white-space:nowrap}
-  .bar{height:7px;border-radius:99px;background:var(--surface-2);overflow:hidden}
-  .bar i{display:block;height:100%;border-radius:99px;background:var(--grad);width:0;
-    transition:width .9s cubic-bezier(.22,.7,.3,1)}
-  .badge-cloud{display:flex;flex-wrap:wrap;gap:8px}
-  .badge-cloud span{font-size:13px;padding:5px 13px;border-radius:999px;background:var(--surface-2);
-    color:var(--text-2);border:1px solid var(--line);transition:all .18s;cursor:default}
-  .badge-cloud span:hover{background:var(--grad);color:#fff;border-color:transparent;transform:translateY(-2px)}
+  .music-link:hover{transform:translateY(-3px);color:var(--accent);border-color:var(--accent);box-shadow:var(--shadow-lg)}
 
   /* ---------- 教育 / 证书 ---------- */
   .edu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
@@ -295,13 +270,12 @@
   @media (prefers-reduced-motion: reduce){
     *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
     .reveal{opacity:1;transform:none}
-    .bar i{transition:none}
   }
 
   /* ---------- 打印 ---------- */
   @media print{
     :root{--bg:#fff;--surface:#fff;--surface-2:#f2f3f7;--text:#111;--text-2:#333;--text-3:#666;--line:#ddd}
-    nav,.bg-deco,.top-link,.theme-btn,.print-btn,#btn-copy-email,.lightbox{display:none!important}
+    nav,.bg-deco,.top-link,.theme-btn,.print-btn,#btn-copy-email,.lightbox,.music-link{display:none!important}
     .photo-item,.cert-item{cursor:default;break-inside:avoid}
     .cert-item .cap,.photo-item .cap{opacity:1;transform:none;position:static;background:none;color:#333;padding:8px 4px 0}
     .cert-item .zoom,.photo-item .zoom{display:none}
@@ -315,7 +289,6 @@
     .tabpanel[hidden]{display:block!important}
     .tabs{display:none}
     .exp-item{page-break-inside:avoid}
-    .bar i{background:var(--primary-deep)!important}
     .avatar-ring,.hero-badge .dot{animation:none!important}
     a{color:#111;text-decoration:none}
   }
@@ -330,10 +303,10 @@
     <a href="#about">概要</a>
     <a href="#highlights">亮点</a>
     <a href="#experience">经历</a>
-    <a href="#projects">项目</a>
-    <a href="#skills">技能</a>
     <a href="#education">教育</a>
+    <a href="#honor">荣誉</a>
     <a href="#life">生活</a>
+    <a href="#gallery">光影</a>
   </div>
   <div class="nav-actions">
     <button class="nav-btn theme-btn" id="btn-theme" title="切换深浅色" aria-label="切换深浅色模式">🌙</button>
@@ -378,21 +351,6 @@
     <div id="exp-photos-wrap"></div>
   </section>
 
-  <!-- 项目 -->
-  <section id="projects" class="reveal">
-    <span class="sec-tag">✦ PROJECTS</span>
-    <h2>项目<span class="hl">经历</span></h2>
-    <div class="tabs" role="tablist" aria-label="项目分类" id="proj-tabs"></div>
-    <div id="proj-panels"></div>
-  </section>
-
-  <!-- 技能 -->
-  <section id="skills" class="reveal">
-    <span class="sec-tag">✦ SKILLS</span>
-    <h2>技能<span class="hl">矩阵</span></h2>
-    <div class="skill-grid" id="skill-grid"></div>
-  </section>
-
   <!-- 教育 -->
   <section id="education" class="reveal">
     <span class="sec-tag">✦ EDUCATION</span>
@@ -403,6 +361,15 @@
     <div class="photo-strip" id="cert-wall" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))"></div>
   </section>
 
+  <!-- 荣誉时刻 -->
+  <section id="honor" class="reveal">
+    <span class="sec-tag">✦ HONOR MOMENTS</span>
+    <h2>荣誉<span class="hl">时刻</span></h2>
+    <p style="color:var(--text-2);max-width:640px;margin-bottom:6px;font-size:15px">2026 年高考结束后，很荣幸受到第九届（2026）玉林三区黄氏奖学庆典的表彰——被授予「黄家优秀学子」荣誉证书，并获得 1000 元奖学金作为鼓励。这份来自宗亲会、像家人一样的认可，是我继续往前走的一份底气。</p>
+    <div class="strip-title">🏆 黄氏奖学庆典 · 难忘瞬间（点击查看大图）</div>
+    <div class="photo-strip" id="honor-photos" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))"></div>
+  </section>
+
   <!-- 生活 -->
   <section id="life" class="reveal">
     <span class="sec-tag">✦ BEYOND THE SCREEN</span>
@@ -410,12 +377,21 @@
     <p style="color:var(--text-2);max-width:640px;margin-bottom:22px;font-size:15px">离开屏幕，我同样热烈地活着——篮球场持球突破、排球场上调度传球、乒乓球台快攻对拉，也爱在山野徒步里放空自己。世界那么大，能遇见并交换观点，本身就是一件很酷的事。</p>
     <div class="life-grid" id="life-photos"></div>
   </section>
+
+  <!-- 光影随拍 -->
+  <section id="gallery" class="reveal">
+    <span class="sec-tag">✦ THROUGH MY LENS</span>
+    <h2>光影<span class="hl">随拍</span></h2>
+    <p style="color:var(--text-2);max-width:640px;margin-bottom:22px;font-size:15px">喜欢用镜头收集天空——日落、晚霞、云的形状，还有雨后村口那片金色的光。摄影对我来说不是技巧，而是提醒自己抬头看天的理由。</p>
+    <div class="photo-strip" id="gallery-photos"></div>
+  </section>
 </main>
 
 <footer>
   © <span id="year"></span> 黄雄胜 · 南宁师范大学 人工智能学院 · 最后更新：2026 年 9 月
   <div class="motto">"技术如果不能降低认知门槛，就只是炫技。"</div>
 </footer>
+<a class="music-link" href="https://y.qq.com/n/ryqq/songDetail/003aAYrm3GE0Ac" target="_blank" rel="noopener" title="来首《稻香》· 周杰伦" aria-label="跳转播放周杰伦《稻香》">♪</a>
 <button class="top-link" id="btn-top" title="返回顶部" aria-label="返回顶部">↑</button>
 
 <script>
@@ -454,43 +430,6 @@ const resume = {
       ]
     }
   ],
-  projects: [
-    {
-      cat: "AI 应用",
-      name: "AI 教育助手原型设计",
-      meta: "课程设计项目 · 2026.03 – 2026.06",
-      desc: "基于开源大模型 Qwen-7B 搭建面向高中数学的智能问答原型，覆盖「导数应用」「立体几何证明」两大章节。设计多轮对话管理模块，以 Few-shot Prompting 引导模型分步输出解题思路（识别题型→提取条件→推导步骤），模拟「苏格拉底式」引导教学；构建错题诊断规则库，匹配「概念混淆 / 计算失误 / 方法误用」三类标签并输出针对性练习建议。",
-      result: "20 名在校生内测完成率 92%，「解题思路清晰度」评分 4.3/5.0；入选学院 AI+教育方向展示案例。迭代方向：引入 RAG 增强开放问题泛化能力。",
-      tags: ["Qwen-7B","Few-shot Prompting","多轮对话","错题诊断","RAG（规划）"]
-    },
-    {
-      cat: "AI 应用",
-      name: "「会议纪要助手」多智能体系统",
-      meta: "个人项目 · 2025.10 – 至今",
-      desc: "使用 LangChain 搭建四模块多智能体系统：语音转文字 → 信息提取 → 总结生成 → 待办追踪，实现从原始会议录音到结构化待办列表的端到端自动化。设计角色扮演 Prompt 模板，使模型以「项目经理视角」重构会议内容，精准提炼决策项与责任人。",
-      result: "测试中纪要整理耗时较纯人工降低约 70%；沉淀技术复盘《当我用 Agent 搭建会议系统时学到了什么》。",
-      tags: ["LangChain","多智能体协作","Prompt 模板","端到端自动化"]
-    },
-    {
-      cat: "Web 开发",
-      name: "学生成绩管理系统",
-      meta: "数据库课程设计 · 2025.03 – 2025.06",
-      desc: "使用 MySQL + Python（Flask）开发轻量级 Web 应用，支持教师端录入/修改成绩、学生端查询与可视化趋势图；独立设计 E-R 模型并优化查询语句，增加学业预警功能——当学生某科成绩连续两次下滑超过 10 分时自动向教师端推送关注提醒。",
-      result: "批量导入 1000 条成绩记录响应时间控制在 1.2 秒内；预警功能在课程演示中获教师好评。",
-      tags: ["MySQL","Flask","E-R 建模","数据可视化"]
-    }
-  ],
-  skills: [
-    { title: "AI 应用开发", ico: "🤖",
-      bars: [["Prompt Engineering / CoT 设计","92"],["多智能体工作流（LangChain 基础）","85"],["业务需求 → 可交互 AI 原型","85"]] },
-    { title: "编程语言", ico: "⌨",
-      bars: [["Python（核心）","90"],["SQL（查询与简单分析）","80"],["Java（基础）","70"]] },
-    { title: "工具与框架", ico: "🧰",
-      bars: [["Git / VS Code / Jupyter","90"],["Flask 轻量级 Web 开发","78"],["Linux 基础操作","75"]] },
-    { title: "数据思维", ico: "📊",
-      bars: [["数据清洗与可视化（Pandas / Matplotlib）","85"],["简单建模与特征归纳","78"],["教学场景数据分析（错题诊断）","88"]] }
-  ],
-  softSkills: ["结构化表达","跨龄沟通","快速学习","教学转化能力","团队分享与带动讨论"],
   education: [
     { school:"南宁师范大学", loc:"人工智能学院", deg:"计算机科学与技术 · 本科", date:"2023.09 – 2027.06（预期）",
       notes:["主修课程：数据结构与算法、操作系统、数据库原理、机器学习基础、深度学习导论、自然语言处理概论、软件工程","方向锚点：AI 应用开发 · AI + 教育"] }
@@ -530,6 +469,23 @@ const resume = {
     { src: "17.jpg", cap: "山野徒步 · 途中" },
     { src: "18.jpg", cap: "登高望远 · 风景在路上" },
     { src: "19.jpg", cap: "户外日常 · 放空时刻" }
+  ],
+  honorPhotos: [
+    { src: "award-1.jpg", cap: "黄氏奖学庆典 · 佩戴绶带留念（一）", pos: "center 25%" },
+    { src: "award-2.jpg", cap: "黄氏奖学庆典 · 佩戴绶带留念（二）", pos: "center 30%" },
+    { src: "award-3.jpg", cap: "「黄家优秀学子」荣誉证书", pos: "top center" },
+    { src: "award-4.jpg", cap: "第九届（2026）玉林三区黄氏奖学庆典 · 获奖学子合影" },
+    { src: "award-5.jpg", cap: "奖学金 1000 元 · 来自宗亲会的鼓励", pos: "center" }
+  ],
+  sceneryPhotos: [
+    { src: "scenery-1.jpg", cap: "日落 · 电线杆与晚霞" },
+    { src: "scenery-2.jpg", cap: "登高 · 触手可及的天空" },
+    { src: "scenery-3.jpg", cap: "晚霞 · 粉色的云" },
+    { src: "scenery-4.jpg", cap: "夜幕 · 第一颗星" },
+    { src: "scenery-5.jpg", cap: "火烧云 · 天空着了火" },
+    { src: "scenery-6.jpg", cap: "紫霞 · 黄昏的温柔" },
+    { src: "scenery-7.jpg", cap: "村口 · 雨后的金色" },
+    { src: "scenery-8.jpg", cap: "云隙光 · 阳光穿云而出" }
   ]
 };
 
@@ -636,56 +592,6 @@ buildTabs("#exp-tabs","#exp-panels",resume.experience,(g,panel)=>{
   panel.appendChild(tl);
 });
 
-// 项目
-(function(){
-  const cats=["全部",...new Set(resume.projects.map(p=>p.cat))];
-  const groups=cats.map(c=>({tab:c, list: c==="全部"?resume.projects:resume.projects.filter(p=>p.cat===c)}));
-  buildTabs("#proj-tabs","#proj-panels",groups,(g,panel)=>{
-    const grid=el("div","proj-grid");
-    g.list.forEach(p=>{
-      const card=el("div","card proj-card");
-      card.append(
-        el("div","proj-icon","🚀"),
-        el("h3",null,esc(p.name)),
-        el("div","proj-meta",esc(p.meta)),
-        el("p",null,esc(p.desc)),
-        el("div","proj-result","✦ "+esc(p.result))
-      );
-      const tw=el("div","proj-tags");
-      p.tags.forEach(t=>tw.appendChild(el("span",null,esc(t))));
-      card.appendChild(tw);
-      grid.appendChild(card);
-    });
-    panel.appendChild(grid);
-  });
-})();
-
-// 技能矩阵
-(function(){
-  const grid=$("#skill-grid");
-  resume.skills.forEach(cat=>{
-    const card=el("div","card skill-card");
-    card.appendChild(el("h3",null,'<span class="ico">'+cat.ico+"</span>"+esc(cat.title)));
-    cat.bars.forEach(([name,lvl])=>{
-      const row=el("div","skill-row");
-      row.appendChild(el("div","top","<span>"+esc(name)+"</span><em>"+lvl+"%</em>"));
-      const bar=el("div","bar"); const fill=el("i");
-      bar.appendChild(fill); row.appendChild(bar);
-      card.appendChild(row);
-      requestAnimationFrame(()=>{ setTimeout(()=>{ fill.style.width=lvl+"%"; },120); });
-    });
-    grid.appendChild(card);
-  });
-  // 通用技能徽章
-  const soft=el("div","card skill-card");
-  soft.style.gridColumn="1/-1";
-  soft.appendChild(el("h3",null,'<span class="ico">🤝</span>软技能'));
-  const cloud=el("div","badge-cloud");
-  resume.softSkills.forEach(s=>cloud.appendChild(el("span",null,esc(s))));
-  soft.appendChild(cloud);
-  grid.appendChild(soft);
-})();
-
 // 教育与荣誉
 (function(){
   const grid=$("#edu-grid");
@@ -743,6 +649,20 @@ buildPhotos("#cert-wall", resume.certGallery, "cert-item", "#cert-wall-title");
 })();
 // 生活一瞥
 buildPhotos("#life-photos", resume.lifePhotos, "photo-item", null);
+// 荣誉时刻（竖图 / 横图混合，支持自定义裁剪位置）
+(function(){
+  const strip=$("#honor-photos");
+  resume.honorPhotos.forEach((it,i)=>{
+    const item=el("figure","photo-item");
+    item.innerHTML='<img loading="lazy" decoding="async" src="'+it.src+'" alt="'+esc(it.cap)+'">'+
+      '<span class="zoom">🔍</span><figcaption class="cap">'+esc(it.cap)+"</figcaption>";
+    if(it.pos) item.querySelector("img").style.objectPosition=it.pos;
+    item.addEventListener("click",()=>window.openLB(resume.honorPhotos,i));
+    strip.appendChild(item);
+  });
+})();
+// 光影随拍
+buildPhotos("#gallery-photos", resume.sceneryPhotos, "photo-item", null);
 
 // 统一灯箱
 (function(){
